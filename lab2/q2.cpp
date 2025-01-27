@@ -37,8 +37,19 @@ for(int i =0;i<n;i++){
  cout<<"enter string "<< (i+1)<< ":"<<endl;
  cin.get(strings[i], 100); 
 }
-
-
+// for each word to be reversed 
+/* cout << "\nStrings with reversed letters:" << endl;
+    for (int i = 0; i < n; i++) {
+        // Reverse the string by swapping characters
+        int len = strlen(strings[i]);
+        for (int j = 0; j < len / 2; j++) {
+            // Swap characters
+            char temp = strings[i][j];
+            strings[i][j] = strings[i][len - j - 1];
+            strings[i][len - j - 1] = temp;
+        }
+        cout << strings[i] << endl;
+    }*/
 cout<<"strings in reverse order"<<endl;
 for(int i=n-1; i>=0;i--)
 {
