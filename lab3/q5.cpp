@@ -8,58 +8,56 @@ Create the following methods for your class:
  Show tasks. This method should go through all of your months and print all the tasks allocated.
 Your task is to create one calendar object, then hardcode 5-6 tasks for your calendar. Then demonstrate how
 you’ll remove a task, and display the updated task list.
-Task 6:
-Create a class called Smartphone with the following attributes:
- Company
- Model
- Display Resolution
- RAM
- ROM
- Storage
-Create getter and setter methods for your attributes. A smartphone has some specific actions that it can perform.
-For example:
-1. Make a phone call
-2. Send a message
-3. Connect to the wifi
-4. Browse the internet*/
+*/
 
-#include<iostream>
+#include <iostream>
 #include <string>
-using namespace std ;
-class calender{
+
+using namespace std;
+
+class Calendar {
 private:
-   string month[12][31];
-   int year;
+    string tasks[12][31];
+    int year;
+
 public:
-calender (int y):year(y){}
+    Calendar(int y) { year = y; }
 
-void addTask(const string&task, int date, int month){
+    void addTask(string task, int day, int month) {
+        tasks[month - 1][day - 1] = task;
+    }
 
-}
-void remove(int date, int month){
+    void removeTask(int day, int month) {
+        tasks[month - 1][day - 1] = "";
+    }
 
-}
-
-void show()const{
-cout << "\nTasks for the year " << year << ":\n"; 
-}
-
-
+    void showTasks() {
+        for (int i = 0; i < 12; i++) {
+            for (int j = 0; j < 31; j++) {
+                if (!tasks[i][j].empty()) {
+                    cout << "Month " << i + 1 << ", Day " << j + 1 << ": " << tasks[i][j] << endl;
+                }
+            }
+        }
+    }
 };
 
+int main() {
+    Calendar cal(2025);
+    cal.addTask("Meeting", 5, 2);
+    cal.addTask("Doctor", 10, 3);
+    cal.addTask("Shopping", 15, 4);
+    cal.addTask("Trip", 20, 5);
+    cal.addTask("Dinner", 25, 6);
 
-int main(){
-    calender c1(2025);
-    c1.addTask("Meeting with John", 12, 2);
-    c1.addTask("Doctor's appointment", 15, 4);
-    c1.addTask("Project deadline", 25, 6);
-    c1.addTask("Birthday party", 5, 7);
-    c1.addTask("Team lunch", 19, 9);
-    c1.addTask("Annual conference", 10, 11);
+    cout << "Tasks before removal:" << endl;
+    cal.showTasks();
+    
+    cal.removeTask(10, 3);
 
-c1.show();
-c1.remove(5,7);
-cout << "\nUpdated Task List:" << endl;
-    c1.showTasks();
-
+    cout << "Tasks after removal:" << endl;
+    cal.showTasks();
+    
+    return 0;
 }
+
