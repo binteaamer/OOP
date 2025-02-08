@@ -36,15 +36,15 @@ public:
 int main() {
     Smartphone phone1, phone2;
 
-    phone1.setCompany("Apple");
-    phone1.setModel("iPhone 15");
+    phone1.setCompany("mac");
+    phone1.setModel("iPhone 15 pro max");
     phone1.setResolution("2532x1170");
     phone1.setRAM(6);
     phone1.setROM(128);
     phone1.setStorage(256);
 
-    phone2.setCompany("Samsung");
-    phone2.setModel("Galaxy S23");
+    phone2.setCompany("motorola");
+    phone2.setModel("Gpower 3");
     phone2.setResolution("3088x1440");
     phone2.setRAM(8);
     phone2.setROM(256);
