@@ -10,7 +10,7 @@ Note: first divide loan amount by number of months, then apply the interest rate
 should be a value between 0-0.5%*/
 
 
-not wokring #include <iostream>
+#include <iostream>
 using namespace std;
 
 class LoanHelper {
@@ -62,3 +62,4 @@ int main() {
 
     return 0;
 }
+
