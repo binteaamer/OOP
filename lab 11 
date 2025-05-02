@@ -1,0 +1,249 @@
+#include <iostream>
+#include <stdexcept>
+#include <string>
+
+// Custom exception class for invalid age values
+class InvalidValueException : public std::exception {
+public:
+    const char* what() const noexcept override {
+        return "InvalidValueException - Age cannot be negative or exceed 120.";
+    }
+};
+
+// Function to validate age
+void validateAge(int age) {
+    if (age < 0 || age > 120) {
+        throw InvalidValueException();
+    }
+}
+
+int main() {
+    try {
+        int age;
+        std::cout << "Enter age: ";
+        std::cin >> age;
+        
+        validateAge(age);
+        std::cout << "Age is valid: " << age << std::endl;
+    }
+    catch (const InvalidValueException& e) {
+        std::cerr << "Error: " << e.what() << std::endl;
+    }
+    
+    return 0;
+}
+
+
+
+
+q2 
+#include <iostream>
+#include <stdexcept>
+#include <string>
+
+// Custom exception for stack overflow
+class StackOverflowException : public std::exception {
+public:
+    const char* what() const noexcept override {
+        return "StackOverflowException - Stack is full!";
+    }
+};
+
+// Custom exception for stack underflow
+class StackUnderflowException : public std::exception {
+public:
+    const char* what() const noexcept override {
+        return "StackUnderflowException - Stack is empty!";
+    }
+};
+
+// Template class for Stack with fixed capacity
+template <typename T, size_t Capacity = 10>
+class Stack {
+private:
+    T data[Capacity];
+    size_t topIndex;
+    
+public:
+    Stack() : topIndex(0) {}
+    
+    void push(const T& value) {
+        if (topIndex >= Capacity) {
+            throw StackOverflowException();
+        }
+        data[topIndex++] = value;
+    }
+    
+    T pop() {
+        if (topIndex == 0) {
+            throw StackUnderflowException();
+        }
+        return data[--topIndex];
+    }
+    
+    bool isEmpty() const {
+        return topIndex == 0;
+    }
+    
+    bool isFull() const {
+        return topIndex == Capacity;
+    }
+};
+
+int main() {
+    try {
+        Stack<int, 3> stack; // Small stack for demonstration
+        
+        // Demonstrate pushing to a full stack
+        stack.push(1);
+        stack.push(2);
+        stack.push(3);
+        std::cout << "Pushed 3 items successfully." << std::endl;
+        
+        try {
+            stack.push(4); // This should throw StackOverflowException
+        }
+        catch (const StackOverflowException& e) {
+            std::cout << "Pushing to a full stack: " << e.what() << std::endl;
+        }
+        
+        // Demonstrate popping from an empty stack
+        while (!stack.isEmpty()) {
+            stack.pop();
+        }
+        std::cout << "Popped all items successfully." << std::endl;
+        
+        try {
+            stack.pop(); // This should throw StackUnderflowException
+        }
+        catch (const StackUnderflowException& e) {
+            std::cout << "Popping from an empty stack: " << e.what() << std::endl;
+        }
+    }
+    catch (const std::exception& e) {
+        std::cerr << "Unexpected error: " << e.what() << std::endl;
+    }
+    
+    return 0} 
+
+
+
+
+
+
+
+task 3
+
+#include <iostream>
+#include <stdexcept>
+#include <string>
+
+// Task 01 exception
+class InvalidValueException : public std::exception {
+public:
+    const char* what() const noexcept override {
+        return "InvalidValueException - Value is out of acceptable range.";
+    }
+};
+
+// Task 02 exceptions
+class StackOverflowException : public std::exception {
+public:
+    const char* what() const noexcept override {
+        return "StackOverflowException - Stack is full!";
+    }
+};
+
+class StackUnderflowException : public std::exception {
+public:
+    const char* what() const noexcept override {
+        return "StackUnderflowException - Stack is empty!";
+    }
+};
+
+// Validated Stack that checks values before pushing
+template <typename T, size_t Capacity = 10>
+class ValidatedStack {
+private:
+    T data[Capacity];
+    size_t topIndex;
+    T minValue;
+    T maxValue;
+    
+public:
+    ValidatedStack(T min, T max) : topIndex(0), minValue(min), maxValue(max) {}
+    
+    void push(const T& value) {
+        if (topIndex >= Capacity) {
+            throw StackOverflowException();
+        }
+        if (value < minValue || value > maxValue) {
+            throw InvalidValueException();
+        }
+        data[topIndex++] = value;
+    }
+    
+    T pop() {
+        if (topIndex == 0) {
+            throw StackUnderflowException();
+        }
+        return data[--topIndex];
+    }
+    
+    bool isEmpty() const {
+        return topIndex == 0;
+    }
+    
+    bool isFull() const {
+        return topIndex == Capacity;
+    }
+};
+
+int main() {
+    try {
+        // Create a stack that only accepts ages between 0 and 120
+        ValidatedStack<int, 3> ageStack(0, 120);
+        
+        // Try pushing valid age
+        ageStack.push(25);
+        std::cout << "Pushed valid age 25" << std::endl;
+        
+        // Try pushing invalid age
+        try {
+            ageStack.push(-5);
+        }
+        catch (const InvalidValueException& e) {
+            std::cout << "Error: " << e.what() << std::endl;
+        }
+        
+        // Fill the stack
+        ageStack.push(30);
+        ageStack.push(40);
+        
+        // Try pushing to full stack
+        try {
+            ageStack.push(50);
+        }
+        catch (const StackOverflowException& e) {
+            std::cout << "Error: " << e.what() << std::endl;
+        }
+        
+        // Empty the stack
+        while (!ageStack.isEmpty()) {
+            std::cout << "Popped age: " << ageStack.pop() << std::endl;
+        }
+        
+        // Try popping from empty stack
+        try {
+            ageStack.pop();
+        }
+        catch (const StackUnderflowException& e) {
+            std::cout << "Error: " << e.what() << std::endl;
+        }
+    }
+    catch (const std::exception& e) {
+        std::cerr << "Unexpected error: " << e.what() << std::endl;
+    }
+    
+    return 0;
+}
